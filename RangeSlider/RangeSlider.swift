@@ -61,15 +61,18 @@ class RangeSlider: NSView {
         }
     }
     
-    /** The length of the selected span. */
+    /** The length of the selected span. Note that by default
+        this length is inclusive when snapsToIntegers is true,
+        which will be the expected/desired behavior in most such
+        configurations. In scenarios where it may be weird to have
+        a length of 1.0 when the start and end slider are at an
+        identical value, you may wish to add 1 to the max value
+        (or compensate in some other similar way). */
     var length: Double {
         get {
             let fractionalLength = (selection.end - selection.start)
-            
-            /*  Note the change to an inclusive count here for the snap-to behavior,
-                this will be the expected behavior in almost all such configurations.
-                (See the Demo for an example of both types.) */
-            return (fractionalLength * ((maxValue + (snapsToIntegers ? 1.0 : 0.0)) - minValue))
+
+            return (fractionalLength * (maxValue - minValue)) + (snapsToIntegers ? 1.0 : 0.0)
         }
     }
     
