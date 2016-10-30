@@ -40,7 +40,7 @@ class RangeSlider: NSView {
     //****************************************************************************//
     //****************************************************************************//
     
-    //MARK: - Basic Usage -
+    //MARK: - Public API -
     
     /** The start of the selected span in the slider. */
     var start: Double {
@@ -49,7 +49,8 @@ class RangeSlider: NSView {
         }
         
         set {
-            selection = SelectionRange(start: newValue, end: selection.end)
+            let fractionalStart = (newValue - minValue) / (maxValue - minValue)
+            selection = SelectionRange(start: fractionalStart, end: selection.end)
             setNeedsDisplay(bounds)
         }
     }
@@ -61,7 +62,8 @@ class RangeSlider: NSView {
         }
         
         set {
-            selection = SelectionRange(start: selection.start, end: newValue)
+            let fractionalEnd = (newValue - minValue) / (maxValue - minValue)
+            selection = SelectionRange(start: selection.start, end: fractionalEnd)
             setNeedsDisplay(bounds)
         }
     }
@@ -82,10 +84,18 @@ class RangeSlider: NSView {
     }
     
     /** The minimum value of the slider. */
-    var minValue: Double = 0.0
+    var minValue: Double = 0.0 {
+        didSet {
+            setNeedsDisplay(bounds)
+        }
+    }
     
     /** The maximum value of the slider. */
-    var maxValue: Double = 1.0
+    var maxValue: Double = 1.0 {
+        didSet {
+            setNeedsDisplay(bounds)
+        }
+    }
     
     /** Defaults is false (off). If set to true, the slider
         will snap to whole integer values for both sliders. */
@@ -111,7 +121,7 @@ class RangeSlider: NSView {
     
     //MARK: - Properties -
     
-    var selection: SelectionRange = SelectionRange(start: 0.0, end: 1.0) {
+    private var selection: SelectionRange = SelectionRange(start: 0.0, end: 1.0) {
         willSet {
             if newValue.start != selection.start {
                 self.willChangeValue(forKey: "start")
@@ -141,11 +151,11 @@ class RangeSlider: NSView {
         }
     }
 
-    var currentSliderDragging: DraggedSlider? = nil
+    private var currentSliderDragging: DraggedSlider? = nil
     
     //MARK: - Appearance -
     
-    var sliderGradient: NSGradient {
+    private var sliderGradient: NSGradient {
         get {
             let backgroundStart = NSColor(white: 0.92, alpha: 1.0)
             let backgroundEnd =  NSColor(white: 0.80, alpha: 1.0)
@@ -156,7 +166,7 @@ class RangeSlider: NSView {
         }
     }
     
-    var barBackgroundGradient: NSGradient {
+    private var barBackgroundGradient: NSGradient {
         get {
             let backgroundStart = NSColor(white: 0.85, alpha: 1.0)
             let backgroundEnd =  NSColor(white: 0.70, alpha: 1.0)
@@ -167,7 +177,7 @@ class RangeSlider: NSView {
         }
     }
     
-    var barFillGradient: NSGradient {
+    private var barFillGradient: NSGradient {
         get {
             
             var fillStart: NSColor? = nil
@@ -188,13 +198,13 @@ class RangeSlider: NSView {
         }
     }
     
-    var barStrokeColor: NSColor {
+    private var barStrokeColor: NSColor {
         get {
             return NSColor(white: 0.0, alpha: 0.25)
         }
     }
     
-    var barFillStrokeColor: NSColor {
+    private var barFillStrokeColor: NSColor {
         get {
             if colorStyle == .yellow {
                 return NSColor(red: 1.0, green: 170/255.0, blue: 16/255.0, alpha: 0.70)
@@ -204,21 +214,21 @@ class RangeSlider: NSView {
         }
     }
     
-    let sliderWidth = CGFloat(8.0)
+    private let sliderWidth = CGFloat(8.0)
     
-    var sliderHeight: CGFloat {
+    private var sliderHeight: CGFloat {
         get {
             return NSHeight(bounds) - verticalShadowPadding
         }
     }
     
-    var minSliderX: CGFloat {
+    private var minSliderX: CGFloat {
         get {
             return 0.0
         }
     }
     
-    var maxSliderX: CGFloat {
+    private var maxSliderX: CGFloat {
         get {
             return NSWidth(bounds) - sliderWidth - barTrailingMargin
         }
@@ -258,7 +268,7 @@ class RangeSlider: NSView {
         updateForClick(atPoint: point)
     }
     
-    func updateForClick(atPoint point: NSPoint) {
+    private func updateForClick(atPoint point: NSPoint) {
         if currentSliderDragging != nil {
             var x = Double(point.x / NSWidth(bounds))
             x = max(min(1.0, x), 0.0)
@@ -280,7 +290,7 @@ class RangeSlider: NSView {
     
     //MARK: - Utility -
     
-    func crispLineRect(_ rect: NSRect) -> NSRect {
+    private func crispLineRect(_ rect: NSRect) -> NSRect {
         /*  Floor the rect values here, rather than use NSIntegralRect etc. */
         var newRect = NSMakeRect(floor(rect.origin.x),
                                  floor(rect.origin.y),
@@ -292,14 +302,14 @@ class RangeSlider: NSView {
         return newRect
     }
     
-    func frameForStartSlider() -> NSRect {
+    private func frameForStartSlider() -> NSRect {
         var x = max(CGFloat(selection.start) * NSWidth(bounds) - (sliderWidth / 2.0), minSliderX)
         x = min(x, maxSliderX)
         
         return crispLineRect(NSMakeRect(x, (NSHeight(bounds) - sliderHeight) / 2.0, sliderWidth, sliderHeight))
     }
     
-    func frameForEndSlider() -> NSRect {
+    private func frameForEndSlider() -> NSRect {
         let width = NSWidth(bounds)
         var x = CGFloat(selection.end) * width
         x -= (sliderWidth / 2.0)
