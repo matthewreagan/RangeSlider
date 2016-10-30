@@ -59,6 +59,14 @@ class Demo: NSObject {
         slider4Label1.bind("integerValue", to: slider4, withKeyPath: "start", options: nil)
         slider4Label2.bind("integerValue", to: slider4, withKeyPath: "end", options: nil)
         slider4Label3.bind("integerValue", to: slider4, withKeyPath: "length", options: nil)
+        
+        //Example of using `onControlChanged`:
+        /*
+        slider3.onControlChanged = {
+            (slider: RangeSlider) -> Void in
+            print("Big slider start:\(slider.start) end:\(slider.end)")
+        }
+        */
     }
     
     @IBAction func inclusiveCheckboxClicked(_ sender: AnyObject) {

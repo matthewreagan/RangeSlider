@@ -3,8 +3,19 @@
 //  RangeSlider
 //
 //  Created by Matt Reagan on 10/29/16.
-//  Copyright © 2016 Matt Reagan. All rights reserved.
+//  Copyright © 2016 Matt Reagan.
 //
+//  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation
+//  files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy,
+//  modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+//  Software is furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+//  WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+//  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+//  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import Foundation
 import Cocoa
@@ -46,6 +57,9 @@ class RangeSlider: NSView {
     //****************************************************************************//
     
     //MARK: - Public API -
+    
+    /** Optional action block, called when the control's start or end values change. */
+    var onControlChanged : ((RangeSlider) -> Void)?
     
     /** The start of the selected span in the slider. */
     var start: Double {
@@ -149,16 +163,26 @@ class RangeSlider: NSView {
         }
         
         didSet {
+            var valuesChanged: Bool = false
+            
             if oldValue.start != selection.start {
                 self.didChangeValue(forKey: "start")
+                valuesChanged = true
             }
             
             if oldValue.end != selection.end {
                 self.didChangeValue(forKey: "end")
+                valuesChanged = true
             }
             
             if (oldValue.end - oldValue.start) != (selection.end - selection.start) {
                 self.didChangeValue(forKey: "length")
+            }
+            
+            if valuesChanged {
+                if let block = onControlChanged {
+                    block(self)
+                }
             }
         }
     }
