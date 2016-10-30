@@ -33,6 +33,7 @@
                 <outlet property="slider3Label2" destination="E6U-np-aNh" id="Wvv-qc-51I"/>
                 <outlet property="slider3Label3" destination="2oe-GP-hZ6" id="90Y-vk-9cH"/>
                 <outlet property="slider4" destination="si2-YP-0Z5" id="Wsd-Qq-aZu"/>
+                <outlet property="slider4InclusiveCheckbox" destination="cg9-Bg-AGT" id="V0L-9Q-0lw"/>
                 <outlet property="slider4Label1" destination="FvK-pR-1Ee" id="zW4-Ci-RaL"/>
                 <outlet property="slider4Label2" destination="QUF-oh-Zax" id="G4T-dQ-nWS"/>
                 <outlet property="slider4Label3" destination="sfE-9j-zFB" id="9e2-do-f6z"/>
@@ -881,6 +882,17 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cg9-Bg-AGT">
+                        <rect key="frame" x="356" y="51" width="63" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Inclusive" bezelStyle="regularSquare" imagePosition="left" controlSize="mini" state="on" inset="2" id="fVa-Tj-P8D">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="miniSystem"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="inclusiveCheckboxClicked:" target="8mY-Mk-Wq8" id="K28-dG-Ckc"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
         </window>

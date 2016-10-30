@@ -26,6 +26,7 @@ class Demo: NSObject {
     @IBOutlet weak var slider2: RangeSlider!
     @IBOutlet weak var slider3: RangeSlider!
     @IBOutlet weak var slider4: RangeSlider!
+    @IBOutlet weak var slider4InclusiveCheckbox: NSButton!
     
     override func awakeFromNib() {
         
@@ -55,5 +56,9 @@ class Demo: NSObject {
         slider4Label1.bind("integerValue", to: slider4, withKeyPath: "start", options: nil)
         slider4Label2.bind("integerValue", to: slider4, withKeyPath: "end", options: nil)
         slider4Label3.bind("integerValue", to: slider4, withKeyPath: "length", options: nil)
+    }
+    
+    @IBAction func inclusiveCheckboxClicked(_ sender: AnyObject) {
+        slider4.inclusiveLengthForSnapTo = ((sender as! NSButton).state == NSOnState)
     }
 }
