@@ -131,6 +131,7 @@ class RangeSlider: NSView {
     /** The color style of the slider. */
     var colorStyle: RangeSliderColorStyle = .yellow {
         didSet {
+            barFillGradient = createBarFillGradientBasedOnCurrentStyle()
             setNeedsDisplay(bounds)
         }
     }
@@ -191,47 +192,42 @@ class RangeSlider: NSView {
     
     //MARK: - Appearance -
     
-    private var sliderGradient: NSGradient {
-        get {
-            let backgroundStart = NSColor(white: 0.92, alpha: 1.0)
-            let backgroundEnd =  NSColor(white: 0.80, alpha: 1.0)
-            let barBackgroundGradient = NSGradient(starting: backgroundStart, ending: backgroundEnd)
-            assert(barBackgroundGradient != nil, "Couldn't generate gradient.")
-            
-            return barBackgroundGradient!
-        }
-    }
+    lazy var sliderGradient: NSGradient = {
+        let backgroundStart = NSColor(white: 0.92, alpha: 1.0)
+        let backgroundEnd =  NSColor(white: 0.80, alpha: 1.0)
+        let barBackgroundGradient = NSGradient(starting: backgroundStart, ending: backgroundEnd)
+        assert(barBackgroundGradient != nil, "Couldn't generate gradient.")
+        
+        return barBackgroundGradient!
+    }()
     
-    private var barBackgroundGradient: NSGradient {
-        get {
-            let backgroundStart = NSColor(white: 0.85, alpha: 1.0)
-            let backgroundEnd =  NSColor(white: 0.70, alpha: 1.0)
-            let barBackgroundGradient = NSGradient(starting: backgroundStart, ending: backgroundEnd)
-            assert(barBackgroundGradient != nil, "Couldn't generate gradient.")
-            
-            return barBackgroundGradient!
-        }
-    }
+    lazy var barBackgroundGradient: NSGradient = {
+        let backgroundStart = NSColor(white: 0.85, alpha: 1.0)
+        let backgroundEnd =  NSColor(white: 0.70, alpha: 1.0)
+        let barBackgroundGradient = NSGradient(starting: backgroundStart, ending: backgroundEnd)
+        assert(barBackgroundGradient != nil, "Couldn't generate gradient.")
+        
+        return barBackgroundGradient!
+    }()
     
-    private var barFillGradient: NSGradient {
-        get {
-            
-            var fillStart: NSColor? = nil
-            var fillEnd: NSColor? = nil
-            
-            if colorStyle == .yellow {
-                fillStart = NSColor(red: 1.0, green: 1.0, blue: 0.0, alpha: 1.0)
-                fillEnd = NSColor(red: 1.0, green: 196/255.0, blue: 0.0, alpha: 1.0)
-            } else {
-                fillStart = NSColor(red: 76/255.0, green: 187/255.0, blue: 251/255.0, alpha: 1.0)
-                fillEnd = NSColor(red: 20/255.0, green: 133/255.0, blue: 243/255.0, alpha: 1.0)
-            }
-            
-            let barFillGradient = NSGradient(starting: fillStart!, ending: fillEnd!)
-            assert(barFillGradient != nil, "Couldn't generate gradient.")
-            
-            return barFillGradient!
+    var barFillGradient: NSGradient? = nil
+    
+    func createBarFillGradientBasedOnCurrentStyle() -> NSGradient {
+        var fillStart: NSColor? = nil
+        var fillEnd: NSColor? = nil
+        
+        if colorStyle == .yellow {
+            fillStart = NSColor(red: 1.0, green: 1.0, blue: 0.0, alpha: 1.0)
+            fillEnd = NSColor(red: 1.0, green: 196/255.0, blue: 0.0, alpha: 1.0)
+        } else {
+            fillStart = NSColor(red: 76/255.0, green: 187/255.0, blue: 251/255.0, alpha: 1.0)
+            fillEnd = NSColor(red: 20/255.0, green: 133/255.0, blue: 243/255.0, alpha: 1.0)
         }
+        
+        let barFillGradient = NSGradient(starting: fillStart!, ending: fillEnd!)
+        assert(barFillGradient != nil, "Couldn't generate gradient.")
+        
+        return barFillGradient!
     }
     
     private var barStrokeColor: NSColor {
@@ -425,9 +421,15 @@ class RangeSlider: NSView {
         
         /*  Draw bar fill */
         if NSWidth(selectedRect) > 0.0 {
-            barFillGradient.draw(in: selectedPath, angle: verticalGradientDegrees)
-            barFillStrokeColor.setStroke()
-            selectedPath.stroke()
+            if barFillGradient == nil {
+                barFillGradient = createBarFillGradientBasedOnCurrentStyle()
+            }
+            
+            if let fillGradient = barFillGradient {
+                fillGradient.draw(in: selectedPath, angle: verticalGradientDegrees)
+                barFillStrokeColor.setStroke()
+                selectedPath.stroke()
+            }
         }
         
         barStrokeColor.setStroke()
