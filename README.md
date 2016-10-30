@@ -2,28 +2,36 @@
 
 ![Styles](/RangeSliderStyles.png?raw=true "Styles")
 
-**RangeSlider** is a clean, simple, and attractive range-based slider control for Mac, written in [Swift](https://developer.apple.com/swift/). It provides NSSlider-like behaviors with two control points (start/end) rather than a single slider, useful when users need to select a range of values.
+**RangeSlider** is a clean, simple, and attractive range-based slider control for Mac, written in [Swift](https://developer.apple.com/swift/).
+
+It is similar to [NSSlider](https://developer.apple.com/reference/appkit/nsslider) except that it affords two control points (start and end knobs), useful when users need to select a range of values.
 
 **Features**:
 
 - Simple, easy-to-use
 - Flexible resizing
 - Customizable
-- Several built-in style options
 - Snap-to-interval (optional)
+- Several built-in styles
+
+## Demo
 
 ![RangeSlider Demo](/RangeSliderDemo.gif?raw=true "RangeSlider Demo")
 
 ## How To Use
 
-1. Add to XIB or create a new slider programmatically (`let slider = RangeSlider(frame:sliderFrame)`)
-2. Set the minimum and maximum values (default is `0.0-1.0`)
-3. Set the current `start`/`end` values (default is `0.0-1.0`)
+1. Add to XIB or create programmatically 
+	Ex: `let slider = RangeSlider(frame:sliderFrame)`
+2. (Optional) Set the min/max values (default: `0.0-1.0`)
+3. (Optional) Set the `start`/`end` values (default: `0.0-1.0`)
 4. (Optional) Enable snapping (`snapsToIntegers = true`)
 5. (Optional) Adjust style options (`colorStyle`, `knobStyle`)
 
-Once the slider is configured, you can respond to changes by observing the `start`/`end` (or `length`) values, or using the `onControlChanged` property. Example:
+## Responding to Changes
 
+Once the slider is configured, you can respond to changes by observing the `start`/`end` (or `length`) values, or using the `onControlChanged` property.
+
+Example:
 ```
 mySlider.onControlChanged = {
     (slider: RangeSlider) -> Void in
@@ -31,7 +39,7 @@ mySlider.onControlChanged = {
 }
 ```
 
-### System Requirements
+## System Requirements
 
 RangeSlider is currently macOS-only, however it could easily be updated to work with UIKit. Please file an Issue or feel free to submit a Pull Request if you'd like iOS support.
 
