@@ -37,6 +37,7 @@ class Demo: NSObject {
         slider1.start = 0.25
         slider1.end = 0.75
         slider2.start = 0.5
+        slider2.end = 0.95
         slider3.start = 0.2
         
         slider4.snapsToIntegers = true
