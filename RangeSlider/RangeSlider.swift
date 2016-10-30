@@ -40,7 +40,7 @@ class RangeSlider: NSView {
     
     var start: Double {
         get {
-            return selection.start
+            return (selection.start * (maxValue - minValue)) + minValue
         }
         
         set {
@@ -50,7 +50,7 @@ class RangeSlider: NSView {
     
     var end: Double {
         get {
-            return selection.end
+            return (selection.end * (maxValue - minValue)) + minValue
         }
         
         set {
@@ -60,7 +60,9 @@ class RangeSlider: NSView {
     
     var length: Double {
         get {
-            return selection.end - selection.start
+            let fractionalLength = (selection.end - selection.start)
+            
+            return (fractionalLength * ((maxValue + (snapsToIntegers ? 1.0 : 0.0)) - minValue))
         }
     }
     
@@ -197,6 +199,11 @@ class RangeSlider: NSView {
             let point = convert(event.locationInWindow, from: nil)
             var x = Double(point.x / NSWidth(bounds))
             x = max(min(1.0, x), 0.0)
+            
+            if snapsToIntegers {
+                let steps = maxValue - minValue
+                x = round(x * steps) / steps
+            }
             
             if currentSliderDragging! == .start {
                 selection = SelectionRange(start: x, end: max(selection.end, x))

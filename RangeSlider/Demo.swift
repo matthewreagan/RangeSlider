@@ -19,9 +19,13 @@ class Demo: NSObject {
     @IBOutlet weak var slider3Label1: NSTextField!
     @IBOutlet weak var slider3Label2: NSTextField!
     @IBOutlet weak var slider3Label3: NSTextField!
+    @IBOutlet weak var slider4Label1: NSTextField!
+    @IBOutlet weak var slider4Label2: NSTextField!
+    @IBOutlet weak var slider4Label3: NSTextField!
     @IBOutlet weak var slider1: RangeSlider!
     @IBOutlet weak var slider2: RangeSlider!
     @IBOutlet weak var slider3: RangeSlider!
+    @IBOutlet weak var slider4: RangeSlider!
     
     override func awakeFromNib() {
         
@@ -44,5 +48,13 @@ class Demo: NSObject {
         slider3Label1.bind("doubleValue", to: slider3, withKeyPath: "start", options: nil)
         slider3Label2.bind("doubleValue", to: slider3, withKeyPath: "end", options: nil)
         slider3Label3.bind("doubleValue", to: slider3, withKeyPath: "length", options: nil)
+        
+        slider4Label1.bind("integerValue", to: slider4, withKeyPath: "start", options: nil)
+        slider4Label2.bind("integerValue", to: slider4, withKeyPath: "end", options: nil)
+        slider4Label3.bind("integerValue", to: slider4, withKeyPath: "length", options: nil)
+        
+        slider4.snapsToIntegers = true
+        slider4.minValue = 1
+        slider4.maxValue = 10
     }
 }
