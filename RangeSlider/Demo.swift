@@ -32,6 +32,8 @@ class Demo: NSObject {
         
         //********** Slider Demo ************//
         
+        configureFormatters()
+        
         slider1.start = 0.25
         slider1.end = 0.75
         slider2.start = 0.5
@@ -60,5 +62,18 @@ class Demo: NSObject {
     
     @IBAction func inclusiveCheckboxClicked(_ sender: AnyObject) {
         slider4.inclusiveLengthForSnapTo = ((sender as! NSButton).state == NSOnState)
+    }
+    
+    func configureFormatters () {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        formatter.minimumFractionDigits = 3
+        formatter.maximumFractionDigits = 3
+        
+        for textField in [slider1Label1, slider1Label2, slider1Label3,
+                          slider2Label1, slider2Label2, slider2Label3,
+                          slider3Label1, slider3Label2, slider3Label3] {
+            textField!.formatter = formatter
+        }
     }
 }
