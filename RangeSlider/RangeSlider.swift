@@ -11,6 +11,8 @@ import Cocoa
 
 let verticalGradientDegrees: CGFloat = -90.0
 let verticalShadowPadding: CGFloat = 4.0
+let sliderMinMaxInset: CGFloat = 0.0 //Unused currently
+let barTrailingMargin: CGFloat = 1.0
 
 struct SelectionRange {
     var start: Double
@@ -31,6 +33,12 @@ class RangeSlider: NSView {
     var currentSliderDragging: DraggedSlider? = nil
     
     //MARK: - Appearance -
+    
+    var drawsSliderKnobLines: Bool {
+        get {
+            return false
+        }
+    }
     
     var sliderGradient: NSGradient {
         get {
@@ -132,7 +140,7 @@ class RangeSlider: NSView {
     
     func frameForStartSlider() -> NSRect {
         let halfSliderWidth = (sliderWidth / 2.0)
-        var x = max(CGFloat(selection.start) * NSWidth(bounds), halfSliderWidth)
+        var x = max(CGFloat(selection.start) * NSWidth(bounds), halfSliderWidth + sliderMinMaxInset)
         x -= halfSliderWidth
         
         return crispLineRect(NSMakeRect(x, (NSHeight(bounds) - sliderHeight) / 2.0, sliderWidth, sliderHeight))
@@ -142,7 +150,7 @@ class RangeSlider: NSView {
         let width = NSWidth(bounds)
         var x = CGFloat(selection.end) * width
         x -= (sliderWidth / 2.0)
-        x = min(x, width - sliderWidth - 1.0)
+        x = min(x, width - sliderWidth - barTrailingMargin - sliderMinMaxInset)
         
         return crispLineRect(NSMakeRect(x, (NSHeight(bounds) - sliderHeight) / 2.0, sliderWidth, sliderHeight))
     }
@@ -150,11 +158,12 @@ class RangeSlider: NSView {
     //MARK: - NSView Overrides -
     
     override func draw(_ dirtyRect: NSRect) {
-        let width = NSWidth(bounds) - 1.0
-        let height = NSHeight(bounds)
+        assert(NSWidth(bounds) > (NSHeight(bounds) * 2), "Range control expects a reasonable width to height ratio, width should be greater than twice the height at least.");
+        assert(NSWidth(bounds) > (sliderWidth * 2.0), "Width must be able to accommodate two range sliders.")
+        assert(NSHeight(bounds) >= sliderHeight, "Expects minimum height of at least \(sliderHeight)")
         
-        assert(width > (height * 2), "Range control expects a reasonable width to height ratio, width should be greater than twice the height at least.");
-        assert(width > (sliderWidth * 2.0), "Width must be able to accommodate two range sliders.")
+        let width = NSWidth(bounds) - barTrailingMargin
+        let height = NSHeight(bounds)
         
         let barHeight = round((height - verticalShadowPadding) * (2.0 / 3.0))
         let barY = floor((height - barHeight) / 2.0)
@@ -203,5 +212,17 @@ class RangeSlider: NSView {
         
         sliderGradient.draw(in: endSliderPath, angle: verticalGradientDegrees)
         endSliderPath.stroke()
+        
+        if drawsSliderKnobLines {
+            let knobLineWidth = sliderWidth - 4.0
+            NSColor(white: 0.0, alpha: 0.20).set()
+            for lineY in 1...5 {
+                let line = NSMakeRect(startSliderFrame.origin.x + (knobLineWidth / 2.0),
+                                      (CGFloat(lineY) * 3.0) + 3.0,
+                                      knobLineWidth,
+                                      1.0)
+                NSFrameRectWithWidthUsingOperation(line, 1.0, .sourceOver)
+            }
+        }
     }
 }
