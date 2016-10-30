@@ -749,32 +749,6 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qLg-mI-4Tr">
-                        <rect key="frame" x="91" y="272" width="77" height="22"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Yellow" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="AsJ-iy-EQ7" id="gAR-hV-cL9">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="smallSystem"/>
-                            <menu key="menu" id="2ZF-XB-RAc">
-                                <items>
-                                    <menuItem title="Yellow" state="on" id="AsJ-iy-EQ7"/>
-                                    <menuItem title="Aqua" id="FLT-vo-jG4"/>
-                                </items>
-                            </menu>
-                        </popUpButtonCell>
-                        <connections>
-                            <action selector="stylePopUpChanged:" target="8mY-Mk-Wq8" id="Tgs-sb-tGT"/>
-                        </connections>
-                    </popUpButton>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XPM-xB-X3M">
-                        <rect key="frame" x="60" y="278" width="37" height="11"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Style:" id="naO-3P-E27">
-                            <font key="font" metaFont="system" size="9"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CR6-sg-RuP" customClass="RangeSlider" customModule="RangeSlider" customModuleProvider="target">
                         <rect key="frame" x="60" y="206" width="184" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -919,6 +893,23 @@
                             <action selector="inclusiveCheckboxClicked:" target="8mY-Mk-Wq8" id="K28-dG-Ckc"/>
                         </connections>
                     </button>
+                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qLg-mI-4Tr">
+                        <rect key="frame" x="255" y="302" width="77" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <popUpButtonCell key="cell" type="push" title="Yellow" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="AsJ-iy-EQ7" id="gAR-hV-cL9">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="smallSystem"/>
+                            <menu key="menu" id="2ZF-XB-RAc">
+                                <items>
+                                    <menuItem title="Yellow" state="on" id="AsJ-iy-EQ7"/>
+                                    <menuItem title="Aqua" id="FLT-vo-jG4"/>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                        <connections>
+                            <action selector="stylePopUpChanged:" target="8mY-Mk-Wq8" id="Tgs-sb-tGT"/>
+                        </connections>
+                    </popUpButton>
                 </subviews>
             </view>
         </window>
