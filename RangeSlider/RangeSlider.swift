@@ -25,14 +25,62 @@ enum DraggedSlider {
 
 class RangeSlider: NSView {
     
-    //MARK: - Properties -
+    //****************************************************************************//
+    //****************************************************************************//
+    //MARK: - Basic Usage -
     
-    var selection: SelectionRange = SelectionRange(start: 0.0, end: 0.75) {
-        didSet {
-            //Avoid triggering NSView's -print method:
-            Swift.print("start: \(selection.start) end:\(selection.end)")
+    var start: Double {
+        get {
+            return selection.start
         }
     }
+    
+    var end: Double {
+        get {
+            return selection.end
+        }
+    }
+    
+    var length: Double {
+        get {
+            return selection.end - selection.start
+        }
+    }
+    
+    //****************************************************************************//
+    //****************************************************************************//
+    
+    //MARK: - Properties -
+    
+    var selection: SelectionRange = SelectionRange(start: 0.0, end: 1.0) {
+        willSet {
+            if newValue.start != selection.start {
+                self.willChangeValue(forKey: "start")
+            }
+            
+            if newValue.end != selection.end {
+                self.willChangeValue(forKey: "end")
+            }
+            
+            if (newValue.end - newValue.start) != (selection.end - selection.start) {
+                self.willChangeValue(forKey: "length")
+            }
+        }
+        didSet {
+            if oldValue.start != selection.start {
+                self.didChangeValue(forKey: "start")
+            }
+            
+            if oldValue.end != selection.end {
+                self.didChangeValue(forKey: "end")
+            }
+            
+            if (oldValue.end - oldValue.start) != (selection.end - selection.start) {
+                self.didChangeValue(forKey: "length")
+            }
+        }
+    }
+    
     var initialMouseDown: CGPoint = .zero
     var currentSliderDragging: DraggedSlider? = nil
     
