@@ -76,6 +76,18 @@ class Demo: NSObject {
         }
     }
     
+    @IBAction func sliderPopUpChanged(_ sender: AnyObject) {
+        let selectedItemTitle = (sender as! NSPopUpButton).titleOfSelectedItem
+        let sliders = [slider1, slider2, slider3, slider4]
+        for slider in sliders {
+            if selectedItemTitle == "Square" {
+                slider?.knobStyle = .square
+            } else {
+                slider?.knobStyle = .circular
+            }
+        }
+    }
+    
     func configureFormatters () {
         let formatter = NumberFormatter()
         formatter.numberStyle = NumberFormatter.Style.decimal

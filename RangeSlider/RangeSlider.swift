@@ -28,6 +28,11 @@ enum RangeSliderColorStyle {
     case aqua
 }
 
+enum RangeSliderKnobStyle {
+    case square
+    case circular
+}
+
 class RangeSlider: NSView {
     
     //****************************************************************************//
@@ -111,6 +116,13 @@ class RangeSlider: NSView {
     
     /** The color style of the slider. */
     var colorStyle: RangeSliderColorStyle = .yellow {
+        didSet {
+            setNeedsDisplay(bounds)
+        }
+    }
+    
+    /** The shape style of the slider knobs. Defaults to square. */
+    var knobStyle: RangeSliderKnobStyle = .square {
         didSet {
             setNeedsDisplay(bounds)
         }
@@ -234,7 +246,15 @@ class RangeSlider: NSView {
     
     //MARK: - UI Sizing -
     
-    private let sliderWidth = CGFloat(8.0)
+    private var sliderWidth: CGFloat {
+        get {
+            if knobStyle == .square {
+                return 8.0
+            } else {
+                return NSHeight(bounds) - verticalShadowPadding
+            }
+        }
+    }
     
     private var sliderHeight: CGFloat {
         get {
@@ -367,12 +387,14 @@ class RangeSlider: NSView {
         let selectedRect = crispLineRect(NSMakeRect(CGFloat(selection.start) * width, barY,
                                                     width * CGFloat(selection.end - selection.start), barHeight))
         let radius = barHeight / 3.0;
+        let isSquareSlider = (knobStyle == .square)
         
         /*  Create bezier paths */
         let framePath = NSBezierPath(roundedRect: barRect, xRadius: radius, yRadius: radius)
         let selectedPath = NSBezierPath(roundedRect: selectedRect, xRadius: radius, yRadius: radius)
-        let startSliderPath = NSBezierPath(roundedRect: startSliderFrame, xRadius: 2.0, yRadius: 2.0)
-        let endSliderPath = NSBezierPath(roundedRect: endSliderFrame, xRadius: 2.0, yRadius: 2.0)
+        
+        let startSliderPath = isSquareSlider ? NSBezierPath(roundedRect: startSliderFrame, xRadius: 2.0, yRadius: 2.0) : NSBezierPath(ovalIn: startSliderFrame)
+        let endSliderPath = isSquareSlider ? NSBezierPath(roundedRect: endSliderFrame, xRadius: 2.0, yRadius: 2.0) : NSBezierPath(ovalIn: endSliderFrame)
         
         /*  Draw bar background */
         barBackgroundGradient.draw(in: framePath, angle: -verticalGradientDegrees)
@@ -399,9 +421,12 @@ class RangeSlider: NSView {
         
         /*  Draw slider knobs */
         sliderGradient.draw(in: endSliderPath, angle: verticalGradientDegrees)
+        
+        endSliderPath.lineWidth = isSquareSlider ? 1.0 : 1.5
         endSliderPath.stroke()
         
         sliderGradient.draw(in: startSliderPath, angle: verticalGradientDegrees)
+        startSliderPath.lineWidth = isSquareSlider ? 1.0 : 1.5
         startSliderPath.stroke()
     }
 }

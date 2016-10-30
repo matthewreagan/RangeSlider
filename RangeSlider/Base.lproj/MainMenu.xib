@@ -749,6 +749,23 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qLg-mI-4Tr">
+                        <rect key="frame" x="255" y="302" width="77" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <popUpButtonCell key="cell" type="push" title="Yellow" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="AsJ-iy-EQ7" id="gAR-hV-cL9">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="smallSystem"/>
+                            <menu key="menu" id="2ZF-XB-RAc">
+                                <items>
+                                    <menuItem title="Yellow" state="on" id="AsJ-iy-EQ7"/>
+                                    <menuItem title="Aqua" id="FLT-vo-jG4"/>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                        <connections>
+                            <action selector="stylePopUpChanged:" target="8mY-Mk-Wq8" id="Tgs-sb-tGT"/>
+                        </connections>
+                    </popUpButton>
                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CR6-sg-RuP" customClass="RangeSlider" customModule="RangeSlider" customModuleProvider="target">
                         <rect key="frame" x="60" y="206" width="184" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -893,21 +910,21 @@
                             <action selector="inclusiveCheckboxClicked:" target="8mY-Mk-Wq8" id="K28-dG-Ckc"/>
                         </connections>
                     </button>
-                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qLg-mI-4Tr">
-                        <rect key="frame" x="255" y="302" width="77" height="22"/>
+                    <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="415-PA-c9A">
+                        <rect key="frame" x="334" y="302" width="77" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="push" title="Yellow" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="AsJ-iy-EQ7" id="gAR-hV-cL9">
+                        <popUpButtonCell key="cell" type="push" title="Square" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="455-tD-JUR" id="owU-S2-raV">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="smallSystem"/>
-                            <menu key="menu" id="2ZF-XB-RAc">
+                            <menu key="menu" id="2O2-eX-YkV">
                                 <items>
-                                    <menuItem title="Yellow" state="on" id="AsJ-iy-EQ7"/>
-                                    <menuItem title="Aqua" id="FLT-vo-jG4"/>
+                                    <menuItem title="Square" state="on" id="455-tD-JUR"/>
+                                    <menuItem title="Circular" id="ail-yD-Yyi"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
                         <connections>
-                            <action selector="stylePopUpChanged:" target="8mY-Mk-Wq8" id="Tgs-sb-tGT"/>
+                            <action selector="sliderPopUpChanged:" target="8mY-Mk-Wq8" id="C58-Xr-kY0"/>
                         </connections>
                     </popUpButton>
                 </subviews>
