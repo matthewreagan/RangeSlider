@@ -911,7 +911,7 @@
                         </connections>
                     </button>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="415-PA-c9A">
-                        <rect key="frame" x="334" y="302" width="77" height="22"/>
+                        <rect key="frame" x="334" y="302" width="86" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <popUpButtonCell key="cell" type="push" title="Square" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="455-tD-JUR" id="owU-S2-raV">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>

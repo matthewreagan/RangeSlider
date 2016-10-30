@@ -192,7 +192,7 @@ class RangeSlider: NSView {
     
     //MARK: - Appearance -
     
-    lazy var sliderGradient: NSGradient = {
+    private lazy var sliderGradient: NSGradient = {
         let backgroundStart = NSColor(white: 0.92, alpha: 1.0)
         let backgroundEnd =  NSColor(white: 0.80, alpha: 1.0)
         let barBackgroundGradient = NSGradient(starting: backgroundStart, ending: backgroundEnd)
@@ -201,7 +201,7 @@ class RangeSlider: NSView {
         return barBackgroundGradient!
     }()
     
-    lazy var barBackgroundGradient: NSGradient = {
+    private lazy var barBackgroundGradient: NSGradient = {
         let backgroundStart = NSColor(white: 0.85, alpha: 1.0)
         let backgroundEnd =  NSColor(white: 0.70, alpha: 1.0)
         let barBackgroundGradient = NSGradient(starting: backgroundStart, ending: backgroundEnd)
@@ -210,9 +210,9 @@ class RangeSlider: NSView {
         return barBackgroundGradient!
     }()
     
-    var barFillGradient: NSGradient? = nil
+    private var barFillGradient: NSGradient? = nil
     
-    func createBarFillGradientBasedOnCurrentStyle() -> NSGradient {
+    private func createBarFillGradientBasedOnCurrentStyle() -> NSGradient {
         var fillStart: NSColor? = nil
         var fillEnd: NSColor? = nil
         
