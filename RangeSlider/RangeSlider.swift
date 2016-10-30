@@ -11,7 +11,6 @@ import Cocoa
 
 let verticalGradientDegrees: CGFloat = -90.0
 let verticalShadowPadding: CGFloat = 4.0
-let sliderMinMaxInset: CGFloat = 0.0 //Unused currently
 let barTrailingMargin: CGFloat = 1.0
 
 struct SelectionRange {
@@ -28,17 +27,16 @@ class RangeSlider: NSView {
     
     //MARK: - Properties -
     
-    var selection: SelectionRange = SelectionRange(start: 0.0, end: 0.75)
+    var selection: SelectionRange = SelectionRange(start: 0.0, end: 0.75) {
+        didSet {
+            //Avoid triggering NSView's -print method:
+            Swift.print("start: \(selection.start) end:\(selection.end)")
+        }
+    }
     var initialMouseDown: CGPoint = .zero
     var currentSliderDragging: DraggedSlider? = nil
     
     //MARK: - Appearance -
-    
-    var drawsSliderKnobLines: Bool {
-        get {
-            return false
-        }
-    }
     
     var sliderGradient: NSGradient {
         get {
@@ -93,6 +91,18 @@ class RangeSlider: NSView {
         }
     }
     
+    var minSliderX: CGFloat {
+        get {
+            return 0.0
+        }
+    }
+    
+    var maxSliderX: CGFloat {
+        get {
+            return NSWidth(bounds) - sliderWidth - barTrailingMargin
+        }
+    }
+    
     //MARK: - Event -
     
     override func mouseDown(with event: NSEvent) {
@@ -112,7 +122,8 @@ class RangeSlider: NSView {
     override func mouseDragged(with event: NSEvent) {
         if currentSliderDragging != nil {
             let point = convert(event.locationInWindow, from: nil)
-            let x = Double(point.x / NSWidth(bounds))
+            var x = Double(point.x / NSWidth(bounds))
+            x = max(min(1.0, x), 0.0)
             
             if currentSliderDragging! == .start {
                 selection = SelectionRange(start: x, end: max(selection.end, x))
@@ -139,9 +150,8 @@ class RangeSlider: NSView {
     }
     
     func frameForStartSlider() -> NSRect {
-        let halfSliderWidth = (sliderWidth / 2.0)
-        var x = max(CGFloat(selection.start) * NSWidth(bounds), halfSliderWidth + sliderMinMaxInset)
-        x -= halfSliderWidth
+        var x = max(CGFloat(selection.start) * NSWidth(bounds) - (sliderWidth / 2.0), minSliderX)
+        x = min(x, maxSliderX)
         
         return crispLineRect(NSMakeRect(x, (NSHeight(bounds) - sliderHeight) / 2.0, sliderWidth, sliderHeight))
     }
@@ -150,7 +160,8 @@ class RangeSlider: NSView {
         let width = NSWidth(bounds)
         var x = CGFloat(selection.end) * width
         x -= (sliderWidth / 2.0)
-        x = min(x, width - sliderWidth - barTrailingMargin - sliderMinMaxInset)
+        x = min(x, maxSliderX)
+        x = max(x, minSliderX)
         
         return crispLineRect(NSMakeRect(x, (NSHeight(bounds) - sliderHeight) / 2.0, sliderWidth, sliderHeight))
     }
@@ -198,7 +209,7 @@ class RangeSlider: NSView {
         let shadow = NSShadow()
         shadow.shadowOffset = NSSize(width: 2.0, height: -2.0)
         shadow.shadowBlurRadius = 2.0
-        shadow.shadowColor = NSColor(white: 0.0, alpha: 0.1)
+        shadow.shadowColor = NSColor(white: 0.0, alpha: 0.12)
         
         NSGraphicsContext.saveGraphicsState()
         shadow.set()
@@ -207,13 +218,13 @@ class RangeSlider: NSView {
         endSliderPath.fill()
         NSGraphicsContext.restoreGraphicsState()
         
-        sliderGradient.draw(in: startSliderPath, angle: verticalGradientDegrees)
-        startSliderPath.stroke()
-        
         sliderGradient.draw(in: endSliderPath, angle: verticalGradientDegrees)
         endSliderPath.stroke()
         
-        if drawsSliderKnobLines {
+        sliderGradient.draw(in: startSliderPath, angle: verticalGradientDegrees)
+        startSliderPath.stroke()
+        
+        /*
             let knobLineWidth = sliderWidth - 4.0
             NSColor(white: 0.0, alpha: 0.20).set()
             for lineY in 1...5 {
@@ -223,6 +234,6 @@ class RangeSlider: NSView {
                                       1.0)
                 NSFrameRectWithWidthUsingOperation(line, 1.0, .sourceOver)
             }
-        }
+        */
     }
 }
