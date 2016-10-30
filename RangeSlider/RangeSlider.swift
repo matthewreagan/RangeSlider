@@ -31,23 +31,25 @@ class RangeSlider: NSView {
         RangeSlider is a general-purpose macOS control which is similar to NSSlider
         except that it allows for the selection of a span or range (it has two control
         points, a start and end, which can both be adjusted).
-     
     */
     //****************************************************************************//
     //****************************************************************************//
     
     //MARK: - Basic Usage -
     
+    /** The start of the selected span in the slider. */
     var start: Double {
         get {
             return (selection.start * (maxValue - minValue)) + minValue
         }
         
         set {
-           selection = SelectionRange(start: newValue, end: selection.end)
+            selection = SelectionRange(start: newValue, end: selection.end)
+            setNeedsDisplay(bounds)
         }
     }
     
+    /** The end of the selected span in the slider. */
     var end: Double {
         get {
             return (selection.end * (maxValue - minValue)) + minValue
@@ -55,18 +57,26 @@ class RangeSlider: NSView {
         
         set {
             selection = SelectionRange(start: selection.start, end: newValue)
+            setNeedsDisplay(bounds)
         }
     }
     
+    /** The length of the selected span. */
     var length: Double {
         get {
             let fractionalLength = (selection.end - selection.start)
             
+            /*  Note the change to an inclusive count here for the snap-to behavior,
+                this will be the expected behavior in almost all such configurations.
+                (See the Demo for an example of both types.) */
             return (fractionalLength * ((maxValue + (snapsToIntegers ? 1.0 : 0.0)) - minValue))
         }
     }
     
+    /** The minimum value of the slider. */
     var minValue: Double = 0.0
+    
+    /** The maximum value of the slider. */
     var maxValue: Double = 1.0
     
     /** Defaults is false (off). If set to true, the slider
@@ -246,13 +256,19 @@ class RangeSlider: NSView {
         return crispLineRect(NSMakeRect(x, (NSHeight(bounds) - sliderHeight) / 2.0, sliderWidth, sliderHeight))
     }
     
-    //MARK: - NSView Overrides -
+    //MARK: - Layout
+    
+    override func layout() {
+        super.layout()
+        
+        assert(NSWidth(bounds) >= (NSHeight(bounds) * 2), "Range control expects a reasonable width to height ratio, width should be greater than twice the height at least.");
+        assert(NSWidth(bounds) >= (sliderWidth * 2.0), "Width must be able to accommodate two range sliders.")
+        assert(NSHeight(bounds) >= sliderHeight, "Expects minimum height of at least \(sliderHeight)")
+    }
+    
+    //MARK: - Drawing -
     
     override func draw(_ dirtyRect: NSRect) {
-        assert(NSWidth(bounds) > (NSHeight(bounds) * 2), "Range control expects a reasonable width to height ratio, width should be greater than twice the height at least.");
-        assert(NSWidth(bounds) > (sliderWidth * 2.0), "Width must be able to accommodate two range sliders.")
-        assert(NSHeight(bounds) >= sliderHeight, "Expects minimum height of at least \(sliderHeight)")
-        
         let width = NSWidth(bounds) - barTrailingMargin
         let height = NSHeight(bounds)
         
@@ -303,17 +319,5 @@ class RangeSlider: NSView {
         
         sliderGradient.draw(in: startSliderPath, angle: verticalGradientDegrees)
         startSliderPath.stroke()
-        
-        /*
-            let knobLineWidth = sliderWidth - 4.0
-            NSColor(white: 0.0, alpha: 0.20).set()
-            for lineY in 1...5 {
-                let line = NSMakeRect(startSliderFrame.origin.x + (knobLineWidth / 2.0),
-                                      (CGFloat(lineY) * 3.0) + 3.0,
-                                      knobLineWidth,
-                                      1.0)
-                NSFrameRectWithWidthUsingOperation(line, 1.0, .sourceOver)
-            }
-        */
     }
 }
