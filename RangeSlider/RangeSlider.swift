@@ -119,7 +119,11 @@ class RangeSlider: NSView {
     //MARK: - Utility -
     
     func crispLineRect(_ rect: NSRect) -> NSRect {
-        var newRect = NSIntegralRect(rect)
+        /*  Floor the rect values here, rather than use NSIntegralRect etc. */
+        var newRect = NSMakeRect(floor(rect.origin.x),
+                                 floor(rect.origin.y),
+                                 floor(rect.size.width),
+                                 floor(rect.size.height))
         newRect.origin.x += 0.5
         newRect.origin.y += 0.5
         
@@ -136,8 +140,9 @@ class RangeSlider: NSView {
     
     func frameForEndSlider() -> NSRect {
         let width = NSWidth(bounds)
-        var x = min(CGFloat(selection.end) * width, width - sliderWidth)
+        var x = CGFloat(selection.end) * width
         x -= (sliderWidth / 2.0)
+        x = min(x, width - sliderWidth - 1.0)
         
         return crispLineRect(NSMakeRect(x, (NSHeight(bounds) - sliderHeight) / 2.0, sliderWidth, sliderHeight))
     }
@@ -145,7 +150,7 @@ class RangeSlider: NSView {
     //MARK: - NSView Overrides -
     
     override func draw(_ dirtyRect: NSRect) {
-        let width = NSWidth(bounds)
+        let width = NSWidth(bounds) - 1.0
         let height = NSHeight(bounds)
         
         assert(width > (height * 2), "Range control expects a reasonable width to height ratio, width should be greater than twice the height at least.");
