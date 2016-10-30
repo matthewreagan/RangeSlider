@@ -46,6 +46,7 @@ RangeSlider is still a work-in-progress. A few of the known issues / ToDo's rema
 - [ ] General cleanup, refactoring
 - [ ] Fix knobs being allowed to overlap
 - [ ] Improve border stroke of circular knob style
+- [ ] Accessibilty support + highlighting/focus and other control behaviors
 
 ## System Requirements
 
