@@ -414,6 +414,7 @@ class RangeSlider: NSView {
             NSGraphicsContext.saveGraphicsState()
             shadow.set()
             
+            NSColor.white.set()
             startSliderPath.fill()
             endSliderPath.fill()
             NSGraphicsContext.restoreGraphicsState()
@@ -421,12 +422,9 @@ class RangeSlider: NSView {
         
         /*  Draw slider knobs */
         sliderGradient.draw(in: endSliderPath, angle: verticalGradientDegrees)
-        
-        endSliderPath.lineWidth = isSquareSlider ? 1.0 : 1.5
         endSliderPath.stroke()
         
         sliderGradient.draw(in: startSliderPath, angle: verticalGradientDegrees)
-        startSliderPath.lineWidth = isSquareSlider ? 1.0 : 1.5
         startSliderPath.stroke()
     }
 }
