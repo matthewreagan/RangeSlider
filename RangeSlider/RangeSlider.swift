@@ -27,17 +27,34 @@ class RangeSlider: NSView {
     
     //****************************************************************************//
     //****************************************************************************//
+    /*
+        RangeSlider is a general-purpose macOS control which is similar to NSSlider
+        except that it allows for the selection of a span or range (it has two control
+        points, a start and end, which can both be adjusted).
+     
+    */
+    //****************************************************************************//
+    //****************************************************************************//
+    
     //MARK: - Basic Usage -
     
     var start: Double {
         get {
             return selection.start
         }
+        
+        set {
+           selection = SelectionRange(start: newValue, end: selection.end)
+        }
     }
     
     var end: Double {
         get {
             return selection.end
+        }
+        
+        set {
+            selection = SelectionRange(start: selection.start, end: newValue)
         }
     }
     
@@ -46,6 +63,13 @@ class RangeSlider: NSView {
             return selection.end - selection.start
         }
     }
+    
+    var minValue: Double = 0.0
+    var maxValue: Double = 1.0
+    
+    /** Defaults is false (off). If set to true, the slider
+        will snap to whole integer values for both sliders. */
+    var snapsToIntegers: Bool = false
     
     //****************************************************************************//
     //****************************************************************************//
@@ -66,6 +90,7 @@ class RangeSlider: NSView {
                 self.willChangeValue(forKey: "length")
             }
         }
+        
         didSet {
             if oldValue.start != selection.start {
                 self.didChangeValue(forKey: "start")

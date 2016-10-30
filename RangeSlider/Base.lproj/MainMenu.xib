@@ -771,7 +771,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qSt-Rq-Y5e">
-                        <rect key="frame" x="258" y="196" width="47" height="14"/>
+                        <rect key="frame" x="264" y="196" width="47" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="-" id="AFO-sU-IiM">
                             <font key="font" metaFont="smallSystem"/>
@@ -780,7 +780,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E6U-np-aNh">
-                        <rect key="frame" x="309" y="196" width="47" height="14"/>
+                        <rect key="frame" x="315" y="196" width="47" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="-" id="Or0-sw-aup">
                             <font key="font" metaFont="smallSystem"/>
@@ -789,7 +789,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2oe-GP-hZ6">
-                        <rect key="frame" x="360" y="196" width="47" height="14"/>
+                        <rect key="frame" x="366" y="196" width="47" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="-" id="wTF-i4-rE4">
                             <font key="font" metaFont="smallSystem"/>

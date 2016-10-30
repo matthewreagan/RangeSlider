@@ -27,6 +27,12 @@ class Demo: NSObject {
         
         //********** Slider Demo ************//
         
+        slider1.start = 0.25
+        slider1.end = 0.75
+        slider2.start = 0.5
+        slider3.start = 0.2
+        slider3.end = 0.8
+        
         slider1Label1.bind("doubleValue", to: slider1, withKeyPath: "start", options: nil)
         slider1Label2.bind("doubleValue", to: slider1, withKeyPath: "end", options: nil)
         slider1Label3.bind("doubleValue", to: slider1, withKeyPath: "length", options: nil)
