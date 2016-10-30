@@ -20,12 +20,11 @@ It is similar to [NSSlider](https://developer.apple.com/reference/appkit/nsslide
 
 ## How To Use
 
-1. Add to XIB or create programmatically 
-	Ex: `let slider = RangeSlider(frame:sliderFrame)`
-2. (Optional) Set the min/max values (default: `0.0-1.0`)
-3. (Optional) Set the `start`/`end` values (default: `0.0-1.0`)
-4. (Optional) Enable snapping (`snapsToIntegers = true`)
-5. (Optional) Adjust style options (`colorStyle`, `knobStyle`)
+1. Add to XIB or create programmatically. Example: `let slider = RangeSlider(frame:sliderFrame)`
+2. _(Optional)_ Set the min/max values (default: `0.0-1.0`)
+3. _(Optional)_ Set the `start`/`end` values (default: `0.0-1.0`)
+4. _(Optional)_ Enable snapping (`snapsToIntegers = true`)
+5. _(Optional)_ Adjust style options (`colorStyle`, `knobStyle`)
 
 ## Responding to Changes
 
