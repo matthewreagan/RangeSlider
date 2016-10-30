@@ -176,7 +176,7 @@ class RangeSlider: NSView {
             if colorStyle == .yellow {
                 fillStart = NSColor(red: 1.0, green: 1.0, blue: 0.0, alpha: 1.0)
                 fillEnd = NSColor(red: 1.0, green: 196/255.0, blue: 0.0, alpha: 1.0)
-            } else if colorStyle == .aqua {
+            } else {
                 fillStart = NSColor(red: 76/255.0, green: 187/255.0, blue: 251/255.0, alpha: 1.0)
                 fillEnd = NSColor(red: 20/255.0, green: 133/255.0, blue: 243/255.0, alpha: 1.0)
             }
