@@ -35,7 +35,10 @@ class Demo: NSObject {
         slider1.end = 0.75
         slider2.start = 0.5
         slider3.start = 0.2
-        slider3.end = 0.8
+        
+        slider4.snapsToIntegers = true
+        slider4.minValue = 1
+        slider4.maxValue = 10
         
         slider1Label1.bind("doubleValue", to: slider1, withKeyPath: "start", options: nil)
         slider1Label2.bind("doubleValue", to: slider1, withKeyPath: "end", options: nil)
@@ -52,9 +55,5 @@ class Demo: NSObject {
         slider4Label1.bind("integerValue", to: slider4, withKeyPath: "start", options: nil)
         slider4Label2.bind("integerValue", to: slider4, withKeyPath: "end", options: nil)
         slider4Label3.bind("integerValue", to: slider4, withKeyPath: "length", options: nil)
-        
-        slider4.snapsToIntegers = true
-        slider4.minValue = 1
-        slider4.maxValue = 10
     }
 }
