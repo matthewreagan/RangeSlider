@@ -23,6 +23,11 @@ enum DraggedSlider {
     case end
 }
 
+enum RangeSliderColorStyle {
+    case yellow
+    case aqua
+}
+
 class RangeSlider: NSView {
     
     //****************************************************************************//
@@ -94,6 +99,13 @@ class RangeSlider: NSView {
         to reposition the bars. */
     var allowClicksOnBarToMoveSliders: Bool = true
     
+    /** The color style of the slider. */
+    var colorStyle: RangeSliderColorStyle = .yellow {
+        didSet {
+            setNeedsDisplay(bounds)
+        }
+    }
+    
     //****************************************************************************//
     //****************************************************************************//
     
@@ -157,9 +169,19 @@ class RangeSlider: NSView {
     
     var barFillGradient: NSGradient {
         get {
-            let fillStart = NSColor(red: 1.0, green: 1.0, blue: 0.0, alpha: 1.0)
-            let fillEnd = NSColor(red: 1.0, green: 196/255.0, blue: 0.0, alpha: 1.0)
-            let barFillGradient = NSGradient(starting: fillStart, ending: fillEnd)
+            
+            var fillStart: NSColor? = nil
+            var fillEnd: NSColor? = nil
+            
+            if colorStyle == .yellow {
+                fillStart = NSColor(red: 1.0, green: 1.0, blue: 0.0, alpha: 1.0)
+                fillEnd = NSColor(red: 1.0, green: 196/255.0, blue: 0.0, alpha: 1.0)
+            } else if colorStyle == .aqua {
+                fillStart = NSColor(red: 76/255.0, green: 187/255.0, blue: 251/255.0, alpha: 1.0)
+                fillEnd = NSColor(red: 20/255.0, green: 133/255.0, blue: 243/255.0, alpha: 1.0)
+            }
+            
+            let barFillGradient = NSGradient(starting: fillStart!, ending: fillEnd!)
             assert(barFillGradient != nil, "Couldn't generate gradient.")
             
             return barFillGradient!
@@ -174,7 +196,11 @@ class RangeSlider: NSView {
     
     var barFillStrokeColor: NSColor {
         get {
-            return NSColor(red: 1.0, green: 170/255.0, blue: 16/255.0, alpha: 0.70)
+            if colorStyle == .yellow {
+                return NSColor(red: 1.0, green: 170/255.0, blue: 16/255.0, alpha: 0.70)
+            } else {
+                return NSColor(red: 12/255.0, green: 118/255.0, blue: 227/255.0, alpha: 0.70)
+            }
         }
     }
     

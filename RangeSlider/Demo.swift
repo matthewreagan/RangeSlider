@@ -64,6 +64,18 @@ class Demo: NSObject {
         slider4.inclusiveLengthForSnapTo = ((sender as! NSButton).state == NSOnState)
     }
     
+    @IBAction func stylePopUpChanged(_ sender: AnyObject) {
+        let selectedItemTitle = (sender as! NSPopUpButton).titleOfSelectedItem
+        let sliders = [slider1, slider2, slider3, slider4]
+        for slider in sliders {
+            if selectedItemTitle == "Yellow" {
+                slider?.colorStyle = .yellow
+            } else {
+                slider?.colorStyle = .aqua
+            }
+        }
+    }
+    
     func configureFormatters () {
         let formatter = NumberFormatter()
         formatter.numberStyle = NumberFormatter.Style.decimal
