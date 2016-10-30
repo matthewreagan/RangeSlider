@@ -66,13 +66,13 @@ class RangeSlider: NSView {
         which will be the expected/desired behavior in most such
         configurations. In scenarios where it may be weird to have
         a length of 1.0 when the start and end slider are at an
-        identical value, you may wish to add 1 to the max value
-        (or compensate in some other similar way). */
+        identical value, you can disable this by setting
+        inclusiveLengthForSnapTo to false. */
     var length: Double {
         get {
             let fractionalLength = (selection.end - selection.start)
 
-            return (fractionalLength * (maxValue - minValue)) + (snapsToIntegers ? 1.0 : 0.0)
+            return (fractionalLength * (maxValue - minValue)) + (snapsToIntegers && inclusiveLengthForSnapTo ? 1.0 : 0.0)
         }
     }
     
@@ -85,6 +85,10 @@ class RangeSlider: NSView {
     /** Defaults is false (off). If set to true, the slider
         will snap to whole integer values for both sliders. */
     var snapsToIntegers: Bool = false
+    
+    /** Defaults to true, and makes the length property
+        inclusive when snapsToIntegers is enabled. */
+    var inclusiveLengthForSnapTo: Bool = true
     
     //****************************************************************************//
     //****************************************************************************//
