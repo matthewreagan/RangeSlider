@@ -214,6 +214,26 @@ class RangeSlider: NSView {
         }
     }
     
+    private var _sliderShadow: NSShadow? = nil
+    private func sliderShadow() -> NSShadow? {
+        if (_sliderShadow == nil) {
+            let shadowOffset = NSMakeSize(2.0, -2.0)
+            let shadowBlurRadius: CGFloat = 2.0
+            let shadowColor = NSColor(white: 0.0, alpha: 0.12)
+            
+            let shadow = NSShadow()
+            shadow.shadowOffset = shadowOffset
+            shadow.shadowBlurRadius = shadowBlurRadius
+            shadow.shadowColor = shadowColor
+            
+            _sliderShadow = shadow
+        }
+        
+        return _sliderShadow
+    }
+    
+    //MARK: - UI Sizing -
+    
     private let sliderWidth = CGFloat(8.0)
     
     private var sliderHeight: CGFloat {
@@ -332,6 +352,8 @@ class RangeSlider: NSView {
     //MARK: - Drawing -
     
     override func draw(_ dirtyRect: NSRect) {
+        
+        /*  Setup, calculations */
         let width = NSWidth(bounds) - barTrailingMargin
         let height = NSHeight(bounds)
         
@@ -342,20 +364,20 @@ class RangeSlider: NSView {
         let endSliderFrame = frameForEndSlider()
         
         let barRect = crispLineRect(NSMakeRect(0, barY, width, barHeight))
-        let selectedRect = crispLineRect(NSMakeRect(CGFloat(selection.start) * width,
-                                                    barY,
-                                                    width * CGFloat(selection.end - selection.start),
-                                                    barHeight))
-        
+        let selectedRect = crispLineRect(NSMakeRect(CGFloat(selection.start) * width, barY,
+                                                    width * CGFloat(selection.end - selection.start), barHeight))
         let radius = barHeight / 3.0;
         
+        /*  Create bezier paths */
         let framePath = NSBezierPath(roundedRect: barRect, xRadius: radius, yRadius: radius)
         let selectedPath = NSBezierPath(roundedRect: selectedRect, xRadius: radius, yRadius: radius)
         let startSliderPath = NSBezierPath(roundedRect: startSliderFrame, xRadius: 2.0, yRadius: 2.0)
         let endSliderPath = NSBezierPath(roundedRect: endSliderFrame, xRadius: 2.0, yRadius: 2.0)
         
+        /*  Draw bar background */
         barBackgroundGradient.draw(in: framePath, angle: -verticalGradientDegrees)
         
+        /*  Draw bar fill */
         if NSWidth(selectedRect) > 0.0 {
             barFillGradient.draw(in: selectedPath, angle: verticalGradientDegrees)
             barFillStrokeColor.setStroke()
@@ -365,18 +387,17 @@ class RangeSlider: NSView {
         barStrokeColor.setStroke()
         framePath.stroke()
         
-        let shadow = NSShadow()
-        shadow.shadowOffset = NSSize(width: 2.0, height: -2.0)
-        shadow.shadowBlurRadius = 2.0
-        shadow.shadowColor = NSColor(white: 0.0, alpha: 0.12)
+        /*  Draw slider shadows */
+        if let shadow = sliderShadow() {
+            NSGraphicsContext.saveGraphicsState()
+            shadow.set()
+            
+            startSliderPath.fill()
+            endSliderPath.fill()
+            NSGraphicsContext.restoreGraphicsState()
+        }
         
-        NSGraphicsContext.saveGraphicsState()
-        shadow.set()
-        
-        startSliderPath.fill()
-        endSliderPath.fill()
-        NSGraphicsContext.restoreGraphicsState()
-        
+        /*  Draw slider knobs */
         sliderGradient.draw(in: endSliderPath, angle: verticalGradientDegrees)
         endSliderPath.stroke()
         
