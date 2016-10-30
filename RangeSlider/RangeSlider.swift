@@ -90,6 +90,10 @@ class RangeSlider: NSView {
         inclusive when snapsToIntegers is enabled. */
     var inclusiveLengthForSnapTo: Bool = true
     
+    /** Defaults to true, allows clicks off of the slider knobs
+        to reposition the bars. */
+    var allowClicksOnBarToMoveSliders: Bool = true
+    
     //****************************************************************************//
     //****************************************************************************//
     
@@ -124,8 +128,7 @@ class RangeSlider: NSView {
             }
         }
     }
-    
-    var initialMouseDown: CGPoint = .zero
+
     var currentSliderDragging: DraggedSlider? = nil
     
     //MARK: - Appearance -
@@ -199,21 +202,38 @@ class RangeSlider: NSView {
     
     override func mouseDown(with event: NSEvent) {
         let point = convert(event.locationInWindow, from: nil)
+        let startSlider = frameForStartSlider()
+        let endSlider = frameForEndSlider()
         
-        if NSPointInRect(point, frameForStartSlider()) {
+        if NSPointInRect(point, startSlider) {
             currentSliderDragging = .start
-        } else if NSPointInRect(point, frameForEndSlider()) {
+        } else if NSPointInRect(point, endSlider) {
             currentSliderDragging = .end
         } else {
-            currentSliderDragging = nil
+            if allowClicksOnBarToMoveSliders {
+                let startDist = abs(NSMidX(startSlider) - point.x)
+                let endDist = abs(NSMidX(endSlider) - point.x)
+                
+                if (startDist < endDist) {
+                    currentSliderDragging = .start
+                } else {
+                    currentSliderDragging = .end
+                }
+                
+                updateForClick(atPoint: point)
+            } else {
+                currentSliderDragging = nil
+            }
         }
-        
-        initialMouseDown = point
     }
     
     override func mouseDragged(with event: NSEvent) {
+        let point = convert(event.locationInWindow, from: nil)
+        updateForClick(atPoint: point)
+    }
+    
+    func updateForClick(atPoint point: NSPoint) {
         if currentSliderDragging != nil {
-            let point = convert(event.locationInWindow, from: nil)
             var x = Double(point.x / NSWidth(bounds))
             x = max(min(1.0, x), 0.0)
             
