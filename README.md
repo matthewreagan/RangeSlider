@@ -43,9 +43,10 @@ mySlider.onControlChanged = {
 RangeSlider is still a work-in-progress. A few of the known issues / ToDo's remaining:
 
 - [ ] Fix clipping of knob shadows, especially for circular slider style
-- [ ] General cleanup, refactoring (fix computed `NSGradient` properties etc.)
+- [ ] General cleanup, refactoring
 - [ ] Fix knobs being allowed to overlap
 - [ ] Improve border stroke of circular knob style
+- [ ] Accessibilty support + highlighting/focus and other control behaviors
 
 ## System Requirements
 
