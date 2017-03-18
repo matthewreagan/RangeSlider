@@ -44,6 +44,7 @@ enum RangeSliderKnobStyle {
     case circular
 }
 
+@IBDesignable
 class RangeSlider: NSView {
     
     //****************************************************************************//
