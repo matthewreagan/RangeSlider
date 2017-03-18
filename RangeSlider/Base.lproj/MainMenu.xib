@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11201"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -20,6 +21,7 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <customObject id="8mY-Mk-Wq8" customClass="Demo" customModule="RangeSlider" customModuleProvider="target">
             <connections>
+                <outlet property="masterEnabledCheckbox" destination="jg8-Sz-7Ar" id="H4Z-zq-2Y8"/>
                 <outlet property="slider1" destination="jej-eN-rpY" id="ZE1-ZL-o9c"/>
                 <outlet property="slider1Label1" destination="zIU-ur-437" id="UIm-wB-KLc"/>
                 <outlet property="slider1Label2" destination="L7I-dt-1O4" id="lgl-Ew-CF9"/>
@@ -719,14 +721,14 @@
                         </textFieldCell>
                     </textField>
                     <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="X05-9n-4EI">
-                        <rect key="frame" x="60" y="296" width="400" height="5"/>
+                        <rect key="frame" x="60" y="296" width="400" height="89"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </box>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xWY-5m-Roe">
                         <rect key="frame" x="256" y="275" width="37" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Start" id="xlH-ga-hJK">
-                            <font key="font" metaFont="systemBold" size="9"/>
+                            <font key="font" metaFont="miniSystemBold"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -735,7 +737,7 @@
                         <rect key="frame" x="307" y="275" width="37" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="End" id="lkg-ek-c4e">
-                            <font key="font" metaFont="systemBold" size="9"/>
+                            <font key="font" metaFont="miniSystemBold"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -744,7 +746,7 @@
                         <rect key="frame" x="358" y="275" width="37" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Length" id="hFR-Iz-59V">
-                            <font key="font" metaFont="systemBold" size="9"/>
+                            <font key="font" metaFont="miniSystemBold"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -927,6 +929,14 @@
                             <action selector="sliderPopUpChanged:" target="8mY-Mk-Wq8" id="C58-Xr-kY0"/>
                         </connections>
                     </popUpButton>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jg8-Sz-7Ar">
+                        <rect key="frame" x="59" y="271" width="117" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Sliders enabled" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="WE1-N4-yMo">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="smallSystem"/>
+                        </buttonCell>
+                    </button>
                 </subviews>
             </view>
         </window>

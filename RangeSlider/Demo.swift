@@ -27,12 +27,14 @@ class Demo: NSObject {
     @IBOutlet weak var slider3: RangeSlider!
     @IBOutlet weak var slider4: RangeSlider!
     @IBOutlet weak var slider4InclusiveCheckbox: NSButton!
+    @IBOutlet weak var masterEnabledCheckbox: NSButton!
     
     override func awakeFromNib() {
         
         //********** Slider Demo ************//
         
         configureFormatters()
+        configureMasterEnabledCheckbox()
         
         slider1.start = 0.25
         slider1.end = 0.75
@@ -97,7 +99,17 @@ class Demo: NSObject {
         }
     }
     
-    func configureFormatters () {
+    func configureMasterEnabledCheckbox() {
+        masterEnabledCheckbox.target = self
+        masterEnabledCheckbox.action = #selector(masterEnabledCheckboxChanged)
+    }
+    
+    func masterEnabledCheckboxChanged() {
+        let enabled = (masterEnabledCheckbox.state == NSOnState)
+        [slider1, slider2, slider3, slider4].forEach { $0.enabled = enabled }
+    }
+    
+    func configureFormatters() {
         let formatter = NumberFormatter()
         formatter.numberStyle = NumberFormatter.Style.decimal
         formatter.minimumFractionDigits = 3

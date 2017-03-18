@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C9232B241E7DE5AF006D87F6 /* ColorUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9232B231E7DE5AF006D87F6 /* ColorUtilities.swift */; };
 		C983A3441DC57FF80057B07A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C983A3431DC57FF80057B07A /* AppDelegate.swift */; };
 		C983A3461DC57FF80057B07A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C983A3451DC57FF80057B07A /* Assets.xcassets */; };
 		C983A3491DC57FF90057B07A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C983A3471DC57FF90057B07A /* MainMenu.xib */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C9232B231E7DE5AF006D87F6 /* ColorUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorUtilities.swift; sourceTree = "<group>"; };
 		C983A3401DC57FF80057B07A /* RangeSlider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RangeSlider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C983A3431DC57FF80057B07A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C983A3451DC57FF80057B07A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 				C983A3431DC57FF80057B07A /* AppDelegate.swift */,
 				C983A3501DC580030057B07A /* RangeSlider.swift */,
 				C983A3521DC58F870057B07A /* Demo.swift */,
+				C9232B231E7DE5AF006D87F6 /* ColorUtilities.swift */,
 				C983A3451DC57FF80057B07A /* Assets.xcassets */,
 				C983A3471DC57FF90057B07A /* MainMenu.xib */,
 				C983A34A1DC57FF90057B07A /* Info.plist */,
@@ -137,6 +140,7 @@
 			files = (
 				C983A3511DC580030057B07A /* RangeSlider.swift in Sources */,
 				C983A3441DC57FF80057B07A /* AppDelegate.swift in Sources */,
+				C9232B241E7DE5AF006D87F6 /* ColorUtilities.swift in Sources */,
 				C983A3531DC58F870057B07A /* Demo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
